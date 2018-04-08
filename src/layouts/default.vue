@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lFf">
     <q-layout-header>
       <q-toolbar class="flex" color="primary" glossy>
         <q-btn
@@ -18,16 +18,27 @@
         </q-toolbar-title>
 
         <img
-          src="~/assets/avatar.png"
+          :src="user.photoURL"
           class="float-right avatar"
           alt="avatar"
           @click="rightDrawerOpen = !rightDrawerOpen"
+          v-if="user"
         >
+
+        <q-btn
+          flat
+          dense
+          round
+          @click="rightDrawerOpen = !rightDrawerOpen"
+          v-else
+        >
+          <q-icon name="menu" />
+        </q-btn>
 
       </q-toolbar>
     </q-layout-header>
 
-    <q-layout-footer v-if="user">
+    <q-layout-footer class="full-width justify-center" v-if="user">
       <q-tabs>
         <q-route-tab
           icon="dashboard"
@@ -74,15 +85,15 @@
     </q-layout-footer>
 
     <q-layout-drawer v-model="leftDrawerOpen" content-class="bg-white">
-      <q-list
+      <connected-user></connected-user>
+      <hr>
+      <!-- <q-list
         no-border
         link
-        striped
         inset-separator
+        striped
       >
         <q-list-header>Menu</q-list-header>
-
-        <!-- *** HOME *** -->
         <q-item to="/">
           <q-item-side icon="home" />
           <q-item-main label="Home" />
@@ -91,11 +102,12 @@
           <q-item-side icon="dashboard" />
           <q-item-main label="Dashboard" />
         </q-item>
-        <connected-user></connected-user>
+      </q-list> -->
+      <div v-if="this.$route.path === '/chat'">
         <channels></channels>
-        <div class="ui divider"></div>
-        <users></users>
-      </q-list>
+        <hr>
+      </div>
+      <!-- <users></users> -->
     </q-layout-drawer>
 
     <q-layout-drawer side="right" v-model="rightDrawerOpen" content-class="bg-white">

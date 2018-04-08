@@ -48,6 +48,6 @@ export default {
   background-image url('~assets/es-splash-min.jpg')
   background-size auto 115%
   background-position-x center
-  background-repeat space
+  background-repeat no-repeat
 
 </style>

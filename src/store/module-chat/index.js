@@ -1,13 +1,13 @@
 const state = {
-  currentUser: null,
+  // currentUser: null,
   currentChannel: null,
   isPrivate: false
 }
 
 const mutations = {
-  SET_USER (state, user) {
-    state.currentUser = user
-  },
+  // SET_USER (state, user) {
+  //   state.currentUser = user
+  // },
   SET_CURRENT_CHANNEL (state, channel) {
     state.currentChannel = channel
   },
@@ -17,9 +17,9 @@ const mutations = {
 }
 
 const actions = {
-  setUser ({ commit }, user) {
-    commit('SET_USER', user)
-  },
+  // setUser ({ commit }, user) {
+  //   commit('SET_USER', user)
+  // },
   setCurrentChannel ({ commit }, channel) {
     commit('SET_CURRENT_CHANNEL', channel)
   },
@@ -29,7 +29,7 @@ const actions = {
 }
 
 const getters = {
-  currentUser: state => state.currentUser,
+  // currentUser: state => state.currentUser,
   currentChannel: state => state.currentChannel,
   isPrivate: state => state.isPrivate
 }

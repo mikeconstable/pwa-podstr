@@ -1,38 +1,39 @@
 <template>
-  <div class="fixed-bottom q-pb-xl q-pa-sm bg-grey-3">
-    <div class="justify-start">
-      <form @submit.prevent="sendMessage">
-        <q-field>
+  <div class="fixed-bottom full-width q-mb-lg q-pa-sm bg-grey-3">
+    <div class="justify-start q-mb-sm">
+      <form class="row justify-between" @submit.prevent="sendMessage">
+        <q-field class="col-9">
           <q-input
             @keyup.enter.native="sendMessage"
             v-model.trim="message"
             type="textarea"
             placeholder="Enter message"
-            :max-height="100"
+            :max-height="40"
             rows="2"
           />
         </q-field>
 
-        <div class="q-my-md">
-          <q-btn type="submit" class="bg-primary text-white" @click.prevent="sendMessage">
-            <q-icon name="send" class="on-left" />
-            Send
-          </q-btn>
+        <div class="col-3 q-py-xs q-pl-lg">
           <q-btn
             class="bg-secondary text-white"
             @click.prevent="openFileModal"
-            :loading="loading"
             :class="{'disabled': uploadState == 'uploading'}">
-            <q-icon name="file_upload" class="on-left" />
+            <q-icon name="file_upload" />
             <span slot="loading">Uploading...</span>
-            Upload
+          </q-btn>
+          <q-btn
+            type="submit"
+            class="bg-primary text-white q-my-xs"
+            @click.prevent="sendMessage"
+          >
+            <q-icon name="send" />
           </q-btn>
         </div>
       </form>
     </div>
 
     <!--  Process bar upload file -->
-    <div class="" data-total="100" id="uploadedFile" v-if="uploadState != null">
+    <div class="fixed-center" data-total="100" id="uploadedFile" v-if="uploadState != null">
       <!-- <div class="bar">
         <div class="progress">
 
@@ -67,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentChannel', 'currentUser', 'isPrivate']),
+    ...mapGetters(['currentChannel', 'isPrivate']),
     uploadLabel () {
       switch (this.uploadState) {
         case 'uploading':
@@ -79,6 +80,9 @@ export default {
         default:
           return ''
       }
+    },
+    currentUser () {
+      return this.$store.getters.getUser
     }
   },
   methods: {
@@ -188,21 +192,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.messages__form {
-  /* position: fixed;
-  bottom: 0;
-  background-color: #232323;
-  padding: 10px;
-  padding-top: 20px; */
-  height: 210px;
-  left: 300px;
-  right: 0;
-}
-
-.messages__form.big {
-  height: 350px;
-}
-
 .shortcut {
   color: white;
 }

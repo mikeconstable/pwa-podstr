@@ -43,7 +43,7 @@ export default {
   },
   mixins: [mixin],
   computed: {
-    ...mapGetters(['currentUser', 'currentChannel', 'isPrivate'])
+    ...mapGetters(['getUser', 'currentChannel', 'isPrivate'])
   },
   watch: {
     isPrivate () {
@@ -67,7 +67,7 @@ export default {
       })
 
       this.presenceRef.on('child_added', snap => {
-        if (this.currentUser.uid !== snap.key) {
+        if (this.user.uid !== snap.key) {
           this.addStatusToUser(snap.key)
           const channelId = this.getChannelId(snap.key)
 
@@ -83,7 +83,7 @@ export default {
       })
 
       this.presenceRef.on('child_removed', snap => {
-        if (this.currentUser.uid !== snap.key) {
+        if (this.user.uid !== snap.key) {
           this.addStatusToUser(snap.key, false)
 
           this.privateMessagesRef.child(this.getChannelId(snap.key)).off()
@@ -92,7 +92,7 @@ export default {
 
       this.conntectedRef.on('value', snap => {
         if (snap.val() === true) {
-          const ref = this.presenceRef.child(this.currentUser.uid)
+          const ref = this.presenceRef.child(this.user.uid)
           ref.set(true)
           ref.onDisconnect().remove(err => {
             if (err !== null) {
@@ -102,8 +102,8 @@ export default {
         }
       })
     },
-    addStatusToUser (userId, connected = true) {
-      const index = this.users.findIndex(user => user.uid === userId)
+    addStatusToUser (uid, connected = true) {
+      const index = this.users.findIndex(user => user.uid === uid)
       if (index !== -1) {
         if (connected === true) {
           this.users[index].status = 'online'
@@ -139,10 +139,10 @@ export default {
       const channelId = this.getChannelId(user.uid)
       return this.currentChannel.id === channelId
     },
-    getChannelId (userId) {
-      return userId < this.currentUser.uid
-        ? userId + '/' + this.currentUser.uid
-        : this.currentUser.uid + '/' + userId
+    getChannelId (uid) {
+      return uid < this.user.uid
+        ? uid + '/' + this.user.uid
+        : this.user.uid + '/' + uid
     },
     getNotification (user) {
       const channelId = this.getChannelId(user.uid)

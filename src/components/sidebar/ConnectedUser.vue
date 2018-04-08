@@ -1,21 +1,21 @@
 <template lang="html">
-  <div class="connectedUser__container">
-    <div class="ui items user_component">
-      <div class="item">
-        <div class="ui mini image">
-          <img :src="currentUser.photoURL" alt="avatar">
+  <div class="flex">
+    <div class="full-width">
+      <div class="row q-pa-sm justify-between items-center">
+        <div>
+          <img class="avatar" :src="currentUser.photoURL" alt="avatar">
         </div>
-        <div class="middle aligned content">
-          <div class="ui container">
-            <div class="ui inverted header">
+        <div class="">
+          <div class="">
+            <div class="q-title">
               {{ currentUser.displayName }}
             </div>
           </div>
         </div>
         <div>
-          <button class="ui circular icon right floated button" @click="logout">
-              <i class="icon sign out"></i>
-          </button>
+          <q-btn fab-mini color="secondary" class="" @click.native="logout">
+              <q-icon name="exit_to_app"/>
+          </q-btn>
         </div>
       </div>
     </div>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Firebase from 'firebase'
 
 export default {
@@ -34,7 +33,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentUser'])
+    currentUser () {
+      return this.$store.getters.getUser
+    }
   },
   methods: {
     logout () {

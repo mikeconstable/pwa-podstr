@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "eventsource-polyfill": "^0.9.6",
     "firebase": "^4.10.1",
-    "vuelidate": "^0.6.2",
+    "firebaseui": "^2.7.0",
     "md5": "^2.2.1",
     "mime-types": "^2.1.16",
     "moment": "^2.18.1",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "vuelidate": "^0.6.2"
   },
   "devDependencies": {
     "babel-eslint": "8.2.1",
@@ -30,6 +32,7 @@
     "eslint-plugin-promise": "3.4.0",
     "eslint-plugin-standard": "3.0.1",
     "eslint-plugin-vue": "4.0.0",
+    "file-loader": "^1.1.11",
     "quasar-cli": "^0.15.14"
   },
   "engines": {

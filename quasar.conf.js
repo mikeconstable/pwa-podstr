@@ -92,7 +92,9 @@ module.exports = function (ctx) {
         'QRouteTab',
         'QChatMessage',
         'QSpinnerDots',
-        'QPullToRefresh'
+        'QPullToRefresh',
+        'QAjaxBar',
+        'QModal'
       ],
       directives: [
         'Ripple',

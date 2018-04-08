@@ -18,6 +18,10 @@ export default {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
+        this.$router.push('/dashboard')
+      }
+      else {
+        this.$router.push('/signin')
       }
     })
   }

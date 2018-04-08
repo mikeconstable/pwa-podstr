@@ -6,7 +6,7 @@ export default [
     component: () => import('layouts/default'),
     children: [
       { path: '', component: () => import('pages/index') },
-      { path: 'signup', component: () => import('pages/user/signup') },
+      // { path: 'signup', component: () => import('pages/user/signup') },
       { path: 'signin', component: () => import('pages/user/signin') },
       { path: 'profile', component: () => import('pages/user/profile'), beforeEnter: AuthGuard },
       { path: 'settings', component: () => import('pages/user/settings'), beforeEnter: AuthGuard },

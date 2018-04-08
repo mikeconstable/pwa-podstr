@@ -1,10 +1,10 @@
 <template lang="html">
-  <div class="sidebar">
-    <h3 class="ui inverted center aligned header">Chat</h3>
+  <div class="">
+    <!-- <h3 class="q-title">Chat</h3>
     <connected-user></connected-user>
     <channels></channels>
     <div class="ui divider"></div>
-    <users></users>
+    <users></users> -->
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
 
 <style lang="css" scoped>
 
-.sidebar {
+/* .sidebar {
   position: fixed;
   display: flex;
   flex-flow: column nowrap;
@@ -32,5 +32,5 @@ export default {
   bottom: 0;
   background-color: brown;
   padding-top: 110px;
-}
+} */
 </style>

@@ -1,53 +1,68 @@
-<template lang="html">
-    <div class="channels__container">
-        <h2 class="listings_header"> Channels <i class="add icon add_channel" @click="openChannelModal"></i></h2>
-        <div class="ui raised padded channels__list">
-            <ul>
-                <li class="channels__item"
-                    v-for="channel in channels"
-                    :key="channel.id"
-                    :class="{'is_active': setChannelActive(channel), 'has_unread': getNotification(channel) > 0}"
-                    @click="changeChannel(channel)">
-                    # {{ channel.name }}
-                    <div class="ui label unread channel__count" v-if="getNotification(channel) > 0 && (channel.id !== currentChannel.id)">
-                        {{ getNotification(channel) }}
-                    </div>
-                </li>
-            </ul>
+<template>
+  <div class="flex">
+    <!-- <div class="q-title"> Channels <i class="add icon add_channel" @click="openChannelModal"></i></div> -->
+    <q-list
+      no-border
+      link
+      inset-separator
+      class="full-width"
+    >
+      <q-list-header>Channels</q-list-header>
+      <q-item
+        v-for="channel in channels"
+        :key="channel.id"
+        :class="{'is_active': setChannelActive(channel), 'has_unread': getNotification(channel) > 0}"
+        @click.native="changeChannel(channel)"
+      >
+        <q-item-side icon="label_outline"/>
+        <q-item-main># {{ channel.name }}</q-item-main>
+        <div v-if="getNotification(channel) > 0 && (channel.id !== currentChannel.id)">
+          {{ getNotification(channel) }}
+        </div>
+      </q-item>
+      <q-btn class="q-ma-md" color="secondary" @click.native="opened = true">
+        <q-icon name="add_circle" class="on-left"/>
+        Add Channel
+      </q-btn>
+    </q-list>
+
+    <!-- Modal -->
+    <q-modal minimized id="channelModal" v-model="opened">
+      <form class="q-pa-md">
+        <div class="q-title q-pa-sm">
+          Add new channel
         </div>
 
-        <!-- Modal -->
-        <div class="ui basic modal" id="channelModal">
-            <div class="ui icon header">
-                Add new channel
-            </div>
+        <div class="row q-pa-sm">
+          <div class="" :class="{'error': hasErrors}">
+            <q-input
+              id="new_channel"
+              v-model="new_channel"
+              float-label="Channel Name"
+              placeholder="Channel Name"
+            />
+          </div>
 
-            <div class="content">
-                <div class="ui inverted form" :class="{'error': hasErrors}">
-                    <div class="field">
-                        <label for="new_channel">Channel name</label>
-                        <input type="text" name="new_channel" id="new_channel" v-model="new_channel">
-                    </div>
-                </div>
-
-                <div class="ui error message" v-if="hasErrors">
-                    <p v-for="error in errors" :key="error">
-                        {{ error }}
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="actions">
-                <div class="ui red basic cancel inverted button" >
-                    <i class="remove icon"></i> Cancel
-                </div>
-                <div class="ui green inverted button" @click="addChannel">
-                    <i class="checkmark icon"></i> Add
-                </div>
-            </div>
+          <div class="q-body-2" v-if="hasErrors">
+            <p v-for="error in errors" :key="error">
+              {{ error }}
+            </p>
+          </div>
         </div>
-    </div>
+
+        <div class="row">
+          <q-btn class="q-ma-sm" color="negative">
+            <q-icon name="close" class="on-left"/>
+            Cancel
+          </q-btn>
+          <q-btn class="q-ma-sm" color="positive" @click.native="addChannel">
+            <q-icon name="check" class="on-left"/>
+            Add
+          </q-btn>
+        </div>
+      </form>
+    </q-modal>
+  </div>
 </template>
 
 <script>
@@ -66,7 +81,8 @@ export default {
       channels: [],
       firstLoad: true,
       notifCount: [],
-      channel: null
+      channel: null,
+      opened: false
     }
   },
   mixins: [mixin],
@@ -137,7 +153,7 @@ export default {
           this.new_channel = ''
           /* global $ */
           /* eslint no-undef: "error" */
-          $('#channelModal').modal('hide')
+          this.opened = false
         })
         .catch(error => {
           this.errors.push(error.message)
@@ -174,6 +190,15 @@ export default {
 
 <style lang="css" scoped>
 /* @import "../../main.scss" */
+.has_unread {
+    color: white;
+    font-weight: bold;
+}
+
+.is_active {
+    background-color: lightblue;
+    color: white;
+}
 
 .channels__list {
   min-height: 100px;

@@ -1,12 +1,16 @@
 <template>
-  <div class="items-start q-py-md window-height">
-    <div>
-      <div class="q-title text-white q-ml-md">{{ channelName }}</div>
+  <div class="q-py-md min-height bg-white column justify-between">
+    <div class="chat-height items-start">
+      <div class="q-title text-blue q-ml-md">{{ channelName }}</div>
       <div>
         <div>
           <!--  Single message -->
           <transition-group tag="div" name="list">
-            <single-message v-for='message in messages' :message='message' :key='message.id'></single-message>
+            <single-message
+              v-for='message in messages'
+              :message='message'
+              :key='message.id'>
+            </single-message>
           </transition-group>
         </div>
       </div>
@@ -21,7 +25,6 @@
 import { mapGetters } from 'vuex'
 import MessageForm from './MessageForm'
 import SingleMessage from './SingleMessage'
-// import { firebaseObj } from '../../config/firebaseConfig'
 import Firebase from 'firebase'
 
 export default {
@@ -37,7 +40,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentChannel', 'currentUser', 'isPrivate']),
+    ...mapGetters(['currentChannel', 'isPrivate']),
+    currentUser () {
+      return this.$store.getters.getUser
+    },
     channelName () {
       if (this.channel !== null) {
         return this.isPrivate
@@ -115,7 +121,9 @@ export default {
 </script>
 
 <style lang='css' scoped>
-
+.min-height {
+  min-height: 75%;
+}
 .list-enter-active {
   transition: all 0.3s;
 }
@@ -124,5 +132,9 @@ export default {
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+.chat-height {
+  margin-bottom: 35%;
 }
 </style>

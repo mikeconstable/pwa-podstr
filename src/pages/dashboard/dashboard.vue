@@ -7,7 +7,7 @@
         <div class="q-subheading text-grey-4"><q-icon name="thumb_down" class="on-left text-grey-4" />Collaborator</div>
       </div>
       <div class="q-ma-lg">
-        <div class="q-title flex row justify-end">MuoMike</div>
+        <div class="q-title flex row justify-end">{{ user.displayName }}</div>
         <div class="q-subheading flex row justify-end">Chester</div>
         <div class="q-subheading flex row justify-end">UK</div>
       </div>
@@ -29,7 +29,7 @@
         <q-card-separator />
         <q-card-main>2 active, 3 draft</q-card-main>
       </q-card>
-      <q-card class="dashcard" @click.native="$router.push('/messages/')">
+      <q-card class="dashcard" @click.native="$router.push('/chat/')">
         <q-card-title class="bg-blue-8 text-white"><q-icon class="on-left" name="message" />Messaging</q-card-title>
         <q-card-separator />
         <q-card-main>10 new posts, 50 chats</q-card-main>
@@ -60,7 +60,11 @@
 
 <script>
 export default {
-
+  computed: {
+    user () {
+      return this.$store.getters.getUser
+    }
+  }
 }
 </script>
 

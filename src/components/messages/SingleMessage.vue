@@ -1,31 +1,34 @@
-<template lang="html">
-    <div class="comment comment__container">
-        <a class="avatar">
-            <img :src="message.user.avatar"/>
-        </a>
-        <div class="content" :class="{'comment__self': selfMessage(message.user)}">
-            <a class="author">{{ message.user.name }}</a>
-            <div class="metadata">
-                <span class="date comment__date">{{ message.timestamp | fromNow }}</span>
-            </div>
-            <div class="text" v-if="!isFile(message)">
-                {{ message.content }}
-            </div>
-
-            <img class="ui image content__image" :src="message.image" alt="image" v-else>
-        </div>
-    </div>
+<template>
+    <q-chat-message
+      :avatar="message.user.avatar"
+      :sent="userCheck()"
+      :bg-color="bgCheck()"
+      :text-color="textCheck()"
+      :stamp="message.timestamp | fromNow"
+      :name="message.user.name"
+    >
+      <div v-if="!isFile(message)">
+        {{ message.content }}
+      </div>
+      <img
+        class="ui image content__image"
+        :src="message.image"
+        alt="image"
+        v-else
+      >
+    </q-chat-message>
 </template>
 
 <script>
 import moment from 'moment'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'single-message',
   props: ['message'],
   computed: {
-    ...mapGetters(['currentUser'])
+    currentUser () {
+      return this.$store.getters.getUser
+    }
   },
   methods: {
     selfMessage (user) {
@@ -33,6 +36,25 @@ export default {
     },
     isFile (message) {
       return message.content == null && message.image != null
+    },
+    userCheck () {
+      return this.selfMessage(this.message.user)
+    },
+    bgCheck () {
+      if (this.selfMessage(this.message.user)) {
+        return 'blue'
+      }
+      else {
+        return 'green'
+      }
+    },
+    textCheck () {
+      if (this.selfMessage(this.message.user)) {
+        return 'white'
+      }
+      else {
+        return 'black'
+      }
     }
   },
   filters: {

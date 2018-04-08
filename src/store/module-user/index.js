@@ -5,21 +5,16 @@ import { Notify } from 'quasar'
 
 export default {
   state: {
-    user: null,
-    userProfile: null
+    currentUser: null
   },
   getters: {
     getUser (state) {
-      return state.user
-    },
-    getUserProfile (state) {
-      return state.userProfile
+      return state.currentUser
     }
   },
   mutations: {
     setUser (state) {
-      state.user = Firebase.auth().currentUser
-      state.userProfile = Firebase.database().users
+      state.currentUser = Firebase.auth().currentUser
     }
   },
   actions: {
@@ -37,7 +32,7 @@ export default {
             id: user.uid,
             name: user.displayName,
             email: user.email,
-            photoUrl: payload.photoURL
+            photoUrl: user.photoURL
           }
           commit('setUser', newUser)
           router.replace('Profile')
@@ -66,7 +61,7 @@ export default {
               id: user.uid,
               name: user.displayName,
               email: user.email,
-              photoUrl: payload.photoURL
+              photoUrl: user.photoURL
             }
             commit('setUser', newUser)
             router.replace('/')

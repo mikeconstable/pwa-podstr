@@ -191,7 +191,7 @@ export default {
 <style lang="css" scoped>
 /* @import "../../main.scss" */
 .has_unread {
-    color: white;
+    color: green;
     font-weight: bold;
 }
 

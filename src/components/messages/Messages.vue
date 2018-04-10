@@ -102,10 +102,10 @@ export default {
 
       this.listeners = []
       this.messages = []
-      // const ref = this.getMessageRef()
-      // if (this.channel !== null) {
-      //     ref.child(this.channel.id).off('child_added')
-      // }
+      const ref = this.getMessageRef()
+      if (this.channel !== null) {
+        ref.child(this.channel.id).off('child_added')
+      }
     },
     getMessageRef () {
       if (this.isPrivate) {

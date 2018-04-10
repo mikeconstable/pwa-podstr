@@ -1,17 +1,18 @@
 <template>
     <q-chat-message
       :avatar="message.user.avatar"
-      :sent="userCheck()"
-      :bg-color="bgCheck()"
-      :text-color="textCheck()"
+      :sent="userCheck"
+      :bg-color="bgCheck"
+      :text-color="textCheck"
       :stamp="message.timestamp | fromNow"
       :name="message.user.name"
+      class="q-px-sm"
     >
       <div v-if="!isFile(message)">
         {{ message.content }}
       </div>
       <img
-        class="ui image content__image"
+        class=""
         :src="message.image"
         alt="image"
         v-else
@@ -28,17 +29,11 @@ export default {
   computed: {
     currentUser () {
       return this.$store.getters.getUser
-    }
-  },
-  methods: {
-    selfMessage (user) {
-      return user.id === this.currentUser.uid
-    },
-    isFile (message) {
-      return message.content == null && message.image != null
     },
     userCheck () {
-      return this.selfMessage(this.message.user)
+      if (this.$q.platform.is.mobile) {
+        return this.selfMessage(this.message.user)
+      }
     },
     bgCheck () {
       if (this.selfMessage(this.message.user)) {
@@ -55,6 +50,19 @@ export default {
       else {
         return 'black'
       }
+    }
+    // commentSelfClass () {
+    //   if (this.selfMessage(this.message.user)) {
+    //     return 'comment__self'
+    //   }
+    // }
+  },
+  methods: {
+    selfMessage (user) {
+      return user.id === this.currentUser.uid
+    },
+    isFile (message) {
+      return message.content == null && message.image != null
     }
   },
   filters: {

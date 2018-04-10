@@ -13,3 +13,5 @@ export const config = {
   storageBucket: 'podstr-vue-q-pwa.appspot.com',
   messagingSenderId: '987128417904'
 }
+
+export const db = Firebase.firestore()

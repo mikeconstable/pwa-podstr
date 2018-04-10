@@ -108,6 +108,42 @@
         <hr>
       </div>
       <!-- <users></users> -->
+      <q-list
+        no-border
+        link
+        inset-separator
+        class="fixed-bottom"
+      >
+        <q-list-header>Profile</q-list-header>
+
+        <!-- *** ACCOUNT *** -->
+
+          <q-item to="/profile" v-if="user">
+            <q-item-side icon="person" />
+            <q-item-main label="Profile" />
+          </q-item>
+
+          <q-item to="/settings" v-if="user">
+            <q-item-side icon="settings" />
+            <q-item-main label="Settings" />
+          </q-item>
+
+          <q-item to="/signin" v-if="!user">
+            <q-item-side icon="lock" />
+            <q-item-main label="Sign-in" />
+          </q-item>
+
+          <q-item to="/signup" v-if="!user">
+            <q-item-side icon="face" />
+            <q-item-main label="Sign-up" />
+          </q-item>
+
+          <q-item link @click.native="actionsheet = true" v-if="user">
+            <q-item-side icon="lock_open" />
+            <q-item-main label="Sign-out" />
+          </q-item>
+
+      </q-list>
     </q-layout-drawer>
 
     <q-layout-drawer side="right" v-model="rightDrawerOpen" content-class="bg-white">
@@ -215,8 +251,11 @@ export default {
     background-image: url('~assets/trianglify.svg');
     background-size: cover;
     background-repeat: no-repeat;
-    /* background-attachment: fixed; */
     background-position: center;
     z-index: -1;
+  }
+  .avatar {
+    height: 37px;
+    width: 37px;
   }
 </style>

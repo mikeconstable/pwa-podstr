@@ -65,4 +65,8 @@ export default {
 .user_component {
   padding-top: 10px;
 }
+.avatar {
+  height: 37px;
+  width: 37px;
+}
 </style>

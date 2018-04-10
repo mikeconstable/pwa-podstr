@@ -6,6 +6,7 @@
 
 <script>
 import Firebase from 'firebase'
+import 'firebase/firestore'
 import { config } from './plugins/firebase'
 
 export default {

@@ -32,7 +32,7 @@
       <q-card class="dashcard" @click.native="$router.push('/chat/')">
         <q-card-title class="bg-blue-8 text-white"><q-icon class="on-left" name="message" />Messaging</q-card-title>
         <q-card-separator />
-        <q-card-main>10 new posts, 50 chats</q-card-main>
+        <q-card-main>3 channels</q-card-main>
       </q-card>
       <q-card class="dashcard" @click.native="$router.push('/funding/')">
         <q-card-title class="bg-blue-8 text-white"><q-icon class="on-left" name="account_balance_wallet" />Funding</q-card-title>
@@ -59,7 +59,14 @@
 </template>
 
 <script>
+import Firebase from 'firebase'
+
 export default {
+  data () {
+    return {
+      channelsRef: Firebase.database().ref('channels')
+    }
+  },
   computed: {
     user () {
       return this.$store.getters.getUser
